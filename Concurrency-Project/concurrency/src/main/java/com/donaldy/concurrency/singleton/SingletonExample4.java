@@ -21,6 +21,10 @@ public class SingletonExample4 {
      * 可能发生指令重排
      * @return
      */
+    
+    // 1. memory = allocate() 分配对象的内存空间
+    // 2. instance = memory 设置instance指向刚分配的内存
+    // 3. ctorInstance() 初始化对象
     public static SingletonExample4 getInstance() {
         if (instance == null) {
             synchronized (SingletonExample4.class) {
