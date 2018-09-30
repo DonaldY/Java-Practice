@@ -19,6 +19,9 @@ public class RequestHolder {
         return requestHolder.get();
     }
 
+    /**
+     * 若不做移除，程序会出现内存泄漏。
+     */
     public static void remove() {
         requestHolder.remove();
     }
