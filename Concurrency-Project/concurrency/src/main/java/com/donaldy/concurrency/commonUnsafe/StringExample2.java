@@ -1,6 +1,5 @@
 package com.donaldy.concurrency.commonUnsafe;
 
-import com.donaldy.concurrency.annoations.UnsafeThread;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
@@ -8,8 +7,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
+/**
+ * Stringbuffer 加了synchronized
+ *
+ * 在性能上有损耗
+ *
+ * 方法里，堆栈封闭
+ */
+
 @Slf4j
-@UnsafeThread
 public class StringExample2 {
 
     // 请求总数
