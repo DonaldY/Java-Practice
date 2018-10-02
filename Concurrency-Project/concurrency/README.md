@@ -13,3 +13,26 @@
 
 4. 被守护对象：
 被守护对象只能通过获取特定的锁来访问
+
+
+## `AbstractQueuedSynchronized` - AQS
+1. 使用Node实现FIFO队列，可以用于构建锁或者其他同步装置的基础框架
+2. 利用了一个int类型表示状态
+3. 使用方法是继承
+4. 子类通过继承并通过实现它的方法管理其状态 {acquire 和 release} 的方法操纵状态
+5. 可以同时实现排它锁和共享锁（独占、共享）
+
+### AQS 同步组件
+1. `CountDownLatch`
+2. `Semaphore`
+3. `CyclicBarrier`
+4. `ReentrantLock`
+5. `Condition`
+6. `FutureTask`
+
+
+## FutureTask
+1. Callable 与 Runnable 接口对接
+2. Future接口
+3. FutureTask类
+4. 
