@@ -35,3 +35,17 @@
 1. Callable 与 Runnable 接口对接
 2. Future接口
 3. FutureTask类
+
+
+## BlockingQueue
+|  | Throws Exception | Special Value | Blocks | Times Out |
+|--|--|--|--|--|
+| Insert | add(o) | offer(0) | put(o) | offer(o, timeout, timeunit) |
+| Remove | remove(o) | poll() | take() | poll(timeout, timeunit) |
+| Examine | element() | peek() |  |  |
+
+1. ArrayBlockingQueue
+2. DelayQueue
+3. LinkedBlockingQueue
+4. PriorityBlockingQueue
+5. SynchronousQueue
