@@ -89,3 +89,7 @@
 2. Executors.newFixedThreadPool
 3. Executors.newScheduledThreadPool
 4. Executors.newThreadExecutor
+
+### 线程池 - 合理配置
+1. CPU密集型任务：需要尽量压榨CPU，参考值可以设为 NCPU + 1
+2. IO密集型任务，参考值可以设置为 2 * NCPU
