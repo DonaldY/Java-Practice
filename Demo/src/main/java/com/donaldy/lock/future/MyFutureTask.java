@@ -5,12 +5,14 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MyFutureTask<V> implements Future<V>,Runnable {
-    private Callable<V> callable; //业务逻辑
-    private boolean running = false ,done = false,cancel = false;// 业务逻辑执行状态
-    private ReentrantLock lock ;//锁
-    private V outcome;//结果
+    private Callable<V> callable;
+    private boolean running = false;
+    private boolean done = false;
+    private boolean cancel = false;
+    private ReentrantLock lock ;
+    private V outcome;
 
-    public MyFutureTask(Callable<V> callable) {
+    MyFutureTask(Callable<V> callable) {
         if(callable == null) {
             throw new NullPointerException("callable cannot be null!");
         }
@@ -37,9 +39,12 @@ public class MyFutureTask<V> implements Future<V>,Runnable {
     }
 
     @Override
-    public V get() throws InterruptedException, ExecutionException {
+    public V get() {
         try {
-            this.lock.lock();//先获取锁，获得后说明业务逻辑已经执行完毕
+            // 这里需要判断任务是否完成
+            // 若没完成，则阻塞
+            // 若完成，则返回
+            this.lock.lock();
             return outcome;
         }finally{
             this.lock.unlock();
@@ -47,7 +52,7 @@ public class MyFutureTask<V> implements Future<V>,Runnable {
     }
 
     @Override
-    public V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
+    public V get(long timeout, TimeUnit unit) {
         try {
             this.lock.tryLock(timeout, unit);
             return outcome;
@@ -60,17 +65,17 @@ public class MyFutureTask<V> implements Future<V>,Runnable {
     @Override
     public void run() {
         try {
-            this.lock.lock(); // 启动线程，先上锁，防止get时直接返回
+            this.lock.lock();
             running = true;
             try {
-                outcome = callable.call(); // 业务逻辑
+                outcome = callable.call();
             } catch (Exception e) {
                 e.printStackTrace();
             }
             done = true;
             running = false;
         }finally {
-            this.lock.unlock(); // 解锁后get可获取
+            this.lock.unlock();
         }
     }
 }
