@@ -1,8 +1,8 @@
-package com.donaldy.thread;
+package com.donaldy.thread.interrupt;
 
 public class InterruptedThread {
 
-    static class MyThread implements Runnable {
+    static class MyThread extends Thread {
 
         private int i = 0;
         private int j = 0;
@@ -31,11 +31,15 @@ public class InterruptedThread {
 
         MyThread myThread = new MyThread();
 
-        myThread.run();
+        myThread.start();
 
         Thread.sleep(1000);
 
-        Thread.currentThread().interrupt();
+        myThread.interrupt();
+
+        while (myThread.isAlive()) {
+
+        }
 
         myThread.print();
     }

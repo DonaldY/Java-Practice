@@ -1,4 +1,4 @@
-package com.donaldy.thread;
+package com.donaldy.thread.interrupt;
 
 /**
  * 线程中断本质：一个线程被另外一个线程打断执行，一个线程被中断会引发中断异常
