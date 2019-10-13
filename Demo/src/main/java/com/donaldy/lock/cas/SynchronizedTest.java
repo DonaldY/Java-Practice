@@ -2,6 +2,16 @@ package com.donaldy.lock.cas;
 
 public class SynchronizedTest {
 
+    public synchronized void test1(){
+
+    }
+    public void test2(){
+
+        synchronized (this){
+
+        }
+    }
+
     static int count = 0;
 
     public static void main(String[] args) throws InterruptedException {
