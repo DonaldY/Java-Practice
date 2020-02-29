@@ -1,6 +1,7 @@
 package com.donaldy.lock.future;
 
 import java.util.concurrent.*;
+import java.util.function.Supplier;
 
 /**
  * @author donald
@@ -33,6 +34,31 @@ public class AsyncCompletableFuture {
             }
         }, POOL_EXECUTOR);
     }
+
+    // 有返回值的异步执行
+    public static void supplyAsync() throws ExecutionException, InterruptedException {
+
+        CompletableFuture future = CompletableFuture.supplyAsync(new Supplier<String>() {
+            @Override
+            public String get() {
+
+                // sleep 2s
+                try {
+
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+
+                    e.printStackTrace();
+                }
+
+                return "hello, donald";
+            }
+        });
+
+        System.out.println(future.get());
+    }
+
+
 
     public static void main(String[] args) {
 
