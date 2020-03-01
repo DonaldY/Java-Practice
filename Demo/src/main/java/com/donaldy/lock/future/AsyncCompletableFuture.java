@@ -130,7 +130,7 @@ public class AsyncCompletableFuture {
 
                 System.out.println("---after oneFuture over doSomething---" + s);
             }
-        })
+        });
     }
 
     public static void main(String[] args) {
