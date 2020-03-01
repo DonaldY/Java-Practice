@@ -1,6 +1,7 @@
 package com.donaldy.lock.future;
 
 import java.util.concurrent.*;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -95,6 +96,41 @@ public class AsyncCompletableFuture {
         });
 
         System.out.println(twoFuture.get());
+    }
+
+    // then accept
+    public static void thenAccept() {
+
+        CompletableFuture<String> oneFuture = CompletableFuture.supplyAsync(new Supplier<String>() {
+            @Override
+            public String get() {
+
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+
+                    e.printStackTrace();
+                }
+
+                return "hello";
+            }
+        });
+
+        CompletableFuture twoFuture = oneFuture.thenAccept(new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+
+                try {
+
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+
+                    e.printStackTrace();
+                }
+
+                System.out.println("---after oneFuture over doSomething---" + s);
+            }
+        })
     }
 
     public static void main(String[] args) {
