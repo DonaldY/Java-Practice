@@ -1,7 +1,10 @@
 package com.donaldy.lock.future;
 
+import com.sun.xml.internal.ws.util.CompletedFuture;
+
 import java.util.concurrent.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -131,6 +134,41 @@ public class AsyncCompletableFuture {
                 System.out.println("---after oneFuture over doSomething---" + s);
             }
         });
+    }
+
+    // then accept callback
+    public static void thenAcceptAndCallback() throws ExecutionException, InterruptedException {
+
+        CompletableFuture<String> oneFuture = CompletableFuture.supplyAsync(new Supplier<String>() {
+            @Override
+            public String get() {
+
+                try {
+
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                return "hello";
+            }
+        });
+
+        CompletableFuture<String> twoFuture = oneFuture.thenApply(new Function<String, String>() {
+            @Override
+            public String apply(String s) {
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                return s + " donald.";
+            }
+        });
+
+        System.out.println(twoFuture.get());
     }
 
     public static void main(String[] args) {
