@@ -3,6 +3,7 @@ package com.donaldy.lock.future;
 import com.sun.xml.internal.ws.util.CompletedFuture;
 
 import java.util.concurrent.*;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -169,6 +170,41 @@ public class AsyncCompletableFuture {
         });
 
         System.out.println(twoFuture.get());
+    }
+
+    // when complete
+    public static void whenComplete() throws InterruptedException {
+
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(new Supplier<String>() {
+            @Override
+            public String get() {
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                return "hello, donald";
+            }
+        });
+
+        future.whenComplete(new BiConsumer<String, Throwable>() {
+            @Override
+            public void accept(String s, Throwable throwable) {
+
+                if (null == throwable) {
+
+                    System.out.println(s);
+                } else {
+
+                    System.out.println(throwable.getLocalizedMessage());
+                }
+            }
+        });
+
+        // 挂起当前线程，等待异步任务执行完毕
+        Thread.currentThread().join();
     }
 
     public static void main(String[] args) {
