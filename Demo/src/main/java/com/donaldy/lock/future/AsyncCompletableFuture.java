@@ -207,6 +207,52 @@ public class AsyncCompletableFuture {
         Thread.currentThread().join();
     }
 
+    // 组合 compose
+    public static CompletableFuture<String> doSomethingOne(String encodedCompanyId) {
+
+        return CompletableFuture.supplyAsync(new Supplier<String>() {
+            @Override
+            public String get() {
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                String id = encodedCompanyId;
+
+                return id;
+            }
+        });
+    }
+
+    public static CompletableFuture<String> doSomethingTwo(String companyId) {
+
+        return CompletableFuture.supplyAsync(new Supplier<String>() {
+            @Override
+            public String get() {
+
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                String str = companyId + ":123";
+
+                return str;
+            }
+        });
+    }
+
+    public static void compose() throws ExecutionException, InterruptedException {
+
+        CompletableFuture result = doSomethingOne("123").thenCompose(id -> doSomethingTwo(id));
+
+        System.out.println(result.get());
+    }
+
     public static void main(String[] args) {
 
         for (int i = 0; i < 20; ++i) {
