@@ -2,6 +2,8 @@ package com.donaldy.lock.future;
 
 import com.sun.xml.internal.ws.util.CompletedFuture;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.*;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -250,6 +252,21 @@ public class AsyncCompletableFuture {
 
         CompletableFuture result = doSomethingOne("123").thenCompose(id -> doSomethingTwo(id));
 
+        System.out.println(result.get());
+    }
+
+    // anyOf
+    public static void anyOf() throws ExecutionException, InterruptedException {
+
+        List<CompletableFuture<String>> futureList = new ArrayList<>();
+        futureList.add(doSomethingOne("1"));
+        futureList.add(doSomethingOne("2"));
+        futureList.add(doSomethingOne("3"));
+
+        // 2. 转换多个future为一个
+        CompletableFuture<Object> result = CompletableFuture.anyOf(futureList.toArray(new CompletableFuture[futureList.size()]));
+
+        // 3. sync
         System.out.println(result.get());
     }
 
