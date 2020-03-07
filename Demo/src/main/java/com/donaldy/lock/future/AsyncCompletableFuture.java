@@ -269,7 +269,7 @@ public class AsyncCompletableFuture {
         System.out.println(result.get());
     }
 
-    public static void exception() {
+    public static void exception() throws ExecutionException, InterruptedException {
 
         CompletableFuture<String> future = new CompletableFuture<>();
 
@@ -283,9 +283,14 @@ public class AsyncCompletableFuture {
                 future.complete("ok");
             } catch (Exception e) {
 
+                // 把异常设置在 future 内部
                 future.completeExceptionally(e);
             }
-        });
+
+            System.out.println("----" + Thread.currentThread().getName() + "set future result----");
+        }, "thread-1").start();
+
+        System.out.println(future.get());
     }
 
     public static void main(String[] args) {
