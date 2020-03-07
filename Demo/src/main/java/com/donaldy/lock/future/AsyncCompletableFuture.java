@@ -269,6 +269,25 @@ public class AsyncCompletableFuture {
         System.out.println(result.get());
     }
 
+    public static void exception() {
+
+        CompletableFuture<String> future = new CompletableFuture<>();
+
+        new Thread(() -> {
+
+            try {
+                if (true) {
+                    throw new RuntimeException("excetion test");
+                }
+
+                future.complete("ok");
+            } catch (Exception e) {
+
+                future.completeExceptionally(e);
+            }
+        });
+    }
+
     public static void main(String[] args) {
 
         for (int i = 0; i < 20; ++i) {
