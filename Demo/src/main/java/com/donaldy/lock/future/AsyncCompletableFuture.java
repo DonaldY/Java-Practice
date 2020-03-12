@@ -290,7 +290,10 @@ public class AsyncCompletableFuture {
             System.out.println("----" + Thread.currentThread().getName() + "set future result----");
         }, "thread-1").start();
 
-        System.out.println(future.get());
+        // System.out.println(future.get());
+
+        // 默认值
+        System.out.println(future.exceptionally(t -> "default").get());
     }
 
     public static void main(String[] args) {
