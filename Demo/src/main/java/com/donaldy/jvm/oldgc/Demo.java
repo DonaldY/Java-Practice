@@ -15,7 +15,7 @@ public class Demo {
 
         byte[] array2 = new byte[128 * 1024];
 
-        byte[] array3 = new byte[128 * 1024];
+        byte[] array3 = new byte[2 * 1024 * 1024];
 
 
         array3 = new byte[2 * 1024 * 1024];
