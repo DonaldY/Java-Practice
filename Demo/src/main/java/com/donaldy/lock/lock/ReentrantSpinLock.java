@@ -1,4 +1,4 @@
-package com.donaldy.thread.lock;
+package com.donaldy.lock.lock;
 
 
 import java.util.concurrent.atomic.AtomicReference;
