@@ -14,11 +14,7 @@ public class TestSpi {
 
         ServiceLoader<Driver> loader = ServiceLoader.load(Driver.class);
 
-        Iterator<Driver> iterator = loader.iterator();
-
-        while (iterator.hasNext()) {
-
-            Driver driver = iterator.next();
+        for (Driver driver : loader) {
 
             System.out.println("driver: " + driver.getClass() + ", loader: "
                     + driver.getClass().getClassLoader());
