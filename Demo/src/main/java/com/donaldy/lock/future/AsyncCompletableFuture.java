@@ -156,18 +156,15 @@ public class AsyncCompletableFuture {
             }
         });
 
-        CompletableFuture<String> twoFuture = oneFuture.thenApply(new Function<String, String>() {
-            @Override
-            public String apply(String s) {
+        CompletableFuture<String> twoFuture = oneFuture.thenApply(s -> {
 
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                return s + " donald.";
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
+            return s + " donald.";
         });
 
         System.out.println(twoFuture.get());
@@ -176,18 +173,15 @@ public class AsyncCompletableFuture {
     // when complete
     public static void whenComplete() throws InterruptedException {
 
-        CompletableFuture<String> future = CompletableFuture.supplyAsync(new Supplier<String>() {
-            @Override
-            public String get() {
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
 
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                return "hello, donald";
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
+            return "hello, donald";
         });
 
         future.whenComplete(new BiConsumer<String, Throwable>() {
@@ -211,39 +205,33 @@ public class AsyncCompletableFuture {
     // 组合 compose
     public static CompletableFuture<String> doSomethingOne(String encodedCompanyId) {
 
-        return CompletableFuture.supplyAsync(new Supplier<String>() {
-            @Override
-            public String get() {
+        return CompletableFuture.supplyAsync(() -> {
 
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                String id = encodedCompanyId;
-
-                return id;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
+            String id = encodedCompanyId;
+
+            return id;
         });
     }
 
     public static CompletableFuture<String> doSomethingTwo(String companyId) {
 
-        return CompletableFuture.supplyAsync(new Supplier<String>() {
-            @Override
-            public String get() {
+        return CompletableFuture.supplyAsync(() -> {
 
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                String str = companyId + ":123";
-
-                return str;
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+
+            String str = companyId + ":123";
+
+            return str;
         });
     }
 
