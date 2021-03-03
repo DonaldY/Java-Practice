@@ -16,12 +16,14 @@ public class PrintEvenOdd {
 
     private void printEventOdd(int target) {
 
-        for (; state < num;) {
+        while (state < num) {
 
             synchronized (LOCK) {
-                while (state % 2 != target) {
+
+                if (state % 2 != target) {
 
                     try {
+                        LOCK.notifyAll();
                         LOCK.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -39,7 +41,7 @@ public class PrintEvenOdd {
 
     public static void main(String[] args) {
 
-        PrintEvenOdd printEvenOdd = new PrintEvenOdd(100);
+        PrintEvenOdd printEvenOdd = new PrintEvenOdd(10);
 
         new Thread(() -> {printEvenOdd.printEventOdd(0);}).start();
         new Thread(() -> {printEvenOdd.printEventOdd(1);}).start();

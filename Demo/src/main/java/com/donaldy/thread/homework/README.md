@@ -113,11 +113,18 @@ public class PrintABCWithWaitNotify {
 ```
 举例如下:
 
-1. event线程先打印, 计数器自增, 停止 event线程, 唤醒其他线程
-2. odd线程被唤醒, 去执行类似 1 的步骤
-3. 当线程判断不是当前的不是自己的状态, 则等待.
+even线程 开始调用 ...
+even线程判断合法, 执行输出
+even线程 开始调用 ...
+even线程判断不合法, 唤醒其他线程, 并停止调用
+
+odd线程 开始调用 ...
+odd线程判断合法, 执行输出
+odd线程 开始调用 ...
+odd线程判断不合法, 唤醒其他线程, 并停止调用
 ```
 
+`Tips`: 先 `notifyAll`, 再 `wait`; 当被 `notify` 唤醒后, 会从原 `wait` 位置开始继续执行
 
 
 ```java
