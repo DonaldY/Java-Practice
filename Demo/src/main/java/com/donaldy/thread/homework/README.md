@@ -128,6 +128,61 @@ odd线程判断不合法, 唤醒其他线程, 并停止调用
 
 
 ```java
+public class PrintEvenOdd {
 
+    private int state;
+    private int num;
+    private final static Object LOCK = new Object();
+
+    private PrintEvenOdd(int num) {
+        this.num = num;
+    }
+
+    private void printEventOdd(int target) {
+
+        while (state < num) {
+
+            synchronized (LOCK) {
+
+                if (state % 2 != target) {
+
+                    try {
+                        LOCK.notifyAll();
+                        LOCK.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (state < num) {
+
+                    System.out.print(state + " ");
+                    state++;
+                    LOCK.notifyAll();
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+        PrintEvenOdd printEvenOdd = new PrintEvenOdd(10);
+
+        new Thread(() -> {printEvenOdd.printEventOdd(0);}).start();
+        new Thread(() -> {printEvenOdd.printEventOdd(1);}).start();
+    }
+}
 ```
 
+
+
+
+
+
+### 3. 通过 `N` 个线程顺序循环打印从 0 至 100
+
+
+
+
+## 三、资料
+
+https://mp.weixin.qq.com/s/YD-5PdPLBeRisHTlSoduew
