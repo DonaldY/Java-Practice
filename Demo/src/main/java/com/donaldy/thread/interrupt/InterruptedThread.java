@@ -30,13 +30,9 @@ public class InterruptedThread {
     public static void main(String[] args) throws InterruptedException {
 
         MyThread myThread = new MyThread();
-
         myThread.start();
-
         Thread.sleep(1000);
-
         myThread.interrupt();
-
         while (myThread.isAlive()) {
 
         }
