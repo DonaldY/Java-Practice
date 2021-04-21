@@ -1,4 +1,4 @@
-
+package com.donaldy.download.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-
+package com.donaldy.download.impl;
 
 import com.coderising.download.api.Connection;
 import com.coderising.download.api.ConnectionException;

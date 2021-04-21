@@ -1,15 +1,13 @@
-
+package com.donaldy.download;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CyclicBarrier;
 
-import com.coderising.download.api.Connection;
-import com.coderising.download.api.ConnectionException;
-import com.coderising.download.api.ConnectionManager;
-import com.coderising.download.api.DownloadListener;
+import com.donaldy.download.api.Connection;
+import com.donaldy.download.api.ConnectionException;
+import com.donaldy.download.api.ConnectionManager;
+import com.donaldy.download.api.DownloadListener;
 
 
 public class FileDownloader {

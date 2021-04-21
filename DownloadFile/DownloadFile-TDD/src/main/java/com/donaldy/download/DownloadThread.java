@@ -1,9 +1,9 @@
-
+package com.donaldy.download;
 
 import java.io.RandomAccessFile;
 import java.util.concurrent.CyclicBarrier;
 
-import com.coderising.download.api.Connection;
+import com.donaldy.download.api.Connection;
 
 public class DownloadThread extends Thread{
 
