@@ -9,6 +9,7 @@ import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -85,8 +86,12 @@ public class NIOServer {
                 // 如果三次握手成功了之后，就可以获取到一个建立好TCP连接的SocketChannel
                 // 这个SocketChannel大概可以理解为，底层有一个Socket，是跟客户端进行连接的
                 // 你的SocketChannel就是联通到那个Socket上去，负责进行网络数据的读写的
-                channel.configureBlocking(false);
-                channel.register(selector, SelectionKey.OP_READ);  // 仅仅关注这个READ请求，就是人家发送数据过来的请求
+
+                if (!Objects.isNull(channel)) {
+
+                    channel.configureBlocking(false);
+                    channel.register(selector, SelectionKey.OP_READ);  // 仅仅关注这个READ请求，就是人家发送数据过来的请求
+                }
             }  // 如果说这个key是readable，是个发送了数据过来的话，此时需要读取客户端发送过来的数据
             else if(key.isReadable()){
                 channel = (SocketChannel) key.channel();
@@ -97,6 +102,27 @@ public class NIOServer {
                 if(count > 0){
                     buffer.flip();   // position = 0，limit = 21，仅仅读取buffer中，0~21这段刚刚写入进去的数据
                     System.out.println("服务端接收请求：" + new String(buffer.array(), 0, count));
+
+                    /**
+                     * 你接收到别人发送过来的数据之后，或者是请求之后，应该如何处理？
+                     *
+                     * 协议： TCP 是传输层的协议，IP是网络层的协议，以太网是链路层的协议。
+                     * 实际上应该有一个 HTTP 协议
+                     *
+                     *
+                     * 别人在这里发送给你的数据看起来，像下面这样：
+                     * GET HTTP/1.1 /home/do.jsp
+                     * Accept: xxx
+                     * Last-Modified: xxx
+                     * {id:1}
+                     *
+                     *
+                     * 此时就需要按照应用层的协议，无论是 HTTP 协议，还是自定义的协议
+                     * 可以按照固定的格式来解析消息，进行处理
+                     *
+                     * 处理完了请求之后，需要发送响应回去，此时可以重新注册一下 channel
+                     * 把你对这个 channel 感兴趣的操作变成： OP_WRITE
+                     */
                     channel.register(selector, SelectionKey.OP_WRITE);
                 }
             } else if(key.isWritable()) {
@@ -106,6 +132,15 @@ public class NIOServer {
 
                 channel = (SocketChannel) key.channel();
                 channel.write(buffer);
+
+                /**
+                 * 此时按照设计好的应用层的协议，比如 HTTP 协议。
+                 *
+                 * 现在已经发送响应回去给客户端了，接下来再次重新注册这个 channel
+                 * 即，我改变注意了，现在又要对客户端的 `READ` 事件比较感兴趣。
+                 *
+                 * 如果说那个 channel 接收到客户端的数据，可以读数据了，就通知我一下。
+                 */
                 channel.register(selector, SelectionKey.OP_READ);
             }
         }
