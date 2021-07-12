@@ -24,8 +24,11 @@ public class FSNamesystem {
 
     /**
      * 创建目录
+     *
+     * 1. 创建目录
+     * 2. 写入 edits log 日志
      * @param path 目录路径
-     * @return
+     * @return 是否成功
      */
     public Boolean mkdir(String path) {
         this.directory.mkdir(path);
