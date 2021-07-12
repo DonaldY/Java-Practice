@@ -29,22 +29,28 @@ public class FSDirectory {
      */
     public void mkdir(String path) {
 
-        String [] pathes = path.split("/");
-        INodeDirectory parent = null;
+        synchronized (dirTree) {
 
+            String [] pathes = path.split("/");
 
-        for (String splitedPath : pathes) {
-            if ("".equals(splitedPath.trim())) {
-                continue;
+            INodeDirectory parent = null;
+
+            for (String splitedPath : pathes) {
+                if ("".equals(splitedPath.trim())) {
+                    continue;
+                }
+
+                // 从哪开始找
+                INodeDirectory tmp = null == parent ? dirTree : parent;
+
+                INodeDirectory dir = findDirectory(tmp, splitedPath);
+                if (null != dir) {
+                    parent = dir;
+                    continue;
+                }
+                INodeDirectory child = new INodeDirectory(splitedPath);
+                parent.addChild(child);
             }
-
-            INodeDirectory dir = findDirectory(dirTree, splitedPath);
-            if (null != dir) {
-                parent = dir;
-                continue;
-            }
-            INodeDirectory child = new INodeDirectory(splitedPath);
-            parent.addChild(child);
         }
     }
 
