@@ -33,17 +33,14 @@ public class FSDirectory {
 
             String [] pathes = path.split("/");
 
-            INodeDirectory parent = null;
+            INodeDirectory parent = dirTree;
 
             for (String splitedPath : pathes) {
                 if ("".equals(splitedPath.trim())) {
                     continue;
                 }
 
-                // 从哪开始找
-                INodeDirectory tmp = null == parent ? dirTree : parent;
-
-                INodeDirectory dir = findDirectory(tmp, splitedPath);
+                INodeDirectory dir = findDirectory(parent, splitedPath);
                 if (null != dir) {
                     parent = dir;
                     continue;
