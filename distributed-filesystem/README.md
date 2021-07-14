@@ -19,4 +19,6 @@ hadoop fs -mkdir /usr/warehouse
 3. `FSEditLog`： 专门写文件到 `edits log`
 
 
-
+**写 `edit log` 采用双缓冲方式：**
+1. 先将缓存写入 `currentBuffer`
+2. `logSync` 会将数据刷入磁盘文件
