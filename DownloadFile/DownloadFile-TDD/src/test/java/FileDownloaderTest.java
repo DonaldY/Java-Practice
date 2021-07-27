@@ -1,13 +1,11 @@
 
 import com.donaldy.download.FileDownloader;
+import com.donaldy.download.api.ConnectionManager;
+import com.donaldy.download.api.DownloadListener;
+import com.donaldy.download.impl.ConnectionManagerImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.coderising.download.FileDownloader;
-import com.coderising.download.api.ConnectionManager;
-import com.coderising.download.api.DownloadListener;
-import com.coderising.download.impl.ConnectionManagerImpl;
 
 public class FileDownloaderTest {
 	boolean downloadFinished = false;
@@ -32,13 +30,7 @@ public class FileDownloaderTest {
 		ConnectionManager cm = new ConnectionManagerImpl();
 		downloader.setConnectionManager(cm);
 		
-		downloader.setListener(new DownloadListener() {
-			@Override
-			public void notifyFinished() {
-				downloadFinished = true;
-			}
-
-		});
+		downloader.setListener(() -> downloadFinished = true);
 
 		
 		downloader.execute();

@@ -9,8 +9,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
 
-import com.coderising.download.api.Connection;
-import com.coderising.download.api.ConnectionException;
+import com.donaldy.download.api.Connection;
+import com.donaldy.download.api.ConnectionException;
 
 class ConnectionImpl implements Connection {
 	
@@ -24,8 +24,7 @@ class ConnectionImpl implements Connection {
 			throw new ConnectionException(e);
 		}
 	}
-	
-	@Override
+
 	public byte[] read(int startPos, int endPos) throws IOException {		
 		
 
@@ -64,7 +63,6 @@ class ConnectionImpl implements Connection {
 		return baos.toByteArray();
 	}
 
-	@Override
 	public int getContentLength() {
 		
         URLConnection con;
@@ -82,10 +80,8 @@ class ConnectionImpl implements Connection {
         
 	}
 
-	@Override
 	public void close() {
-		
-		
+
 	}
 
 }

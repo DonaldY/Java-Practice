@@ -7,11 +7,11 @@ import com.donaldy.download.api.Connection;
 
 public class DownloadThread extends Thread{
 
-	Connection conn;
-	int startPos;
-	int endPos;
-	CyclicBarrier barrier;
-	String localFile;
+	private Connection conn;
+	private int startPos;
+	private int endPos;
+	private CyclicBarrier barrier;
+	private String localFile;
 	public DownloadThread( Connection conn, int startPos, int endPos, String localFile, CyclicBarrier barrier){
 		
 		this.conn = conn;		
@@ -20,8 +20,8 @@ public class DownloadThread extends Thread{
 		this.localFile = localFile;
 		this.barrier = barrier;
 	}
-	public void run(){	
-		
+
+	public void run(){
 		
 		try {
 			System.out.println("Begin to read [" + startPos +"-"+endPos+"]");

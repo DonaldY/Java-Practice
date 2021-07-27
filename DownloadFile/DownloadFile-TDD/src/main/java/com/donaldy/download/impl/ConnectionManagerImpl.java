@@ -1,8 +1,8 @@
 package com.donaldy.download.impl;
 
-import com.coderising.download.api.Connection;
-import com.coderising.download.api.ConnectionException;
-import com.coderising.download.api.ConnectionManager;
+import com.donaldy.download.api.Connection;
+import com.donaldy.download.api.ConnectionException;
+import com.donaldy.download.api.ConnectionManager;
 
 public class ConnectionManagerImpl implements ConnectionManager {
 

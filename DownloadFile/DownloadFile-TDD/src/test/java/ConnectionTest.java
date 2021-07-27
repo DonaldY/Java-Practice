@@ -4,9 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.coderising.download.api.Connection;
-import com.coderising.download.api.ConnectionManager;
-import com.coderising.download.impl.ConnectionManagerImpl;
+import com.donaldy.download.api.Connection;
+import com.donaldy.download.api.ConnectionManager;
+import com.donaldy.download.impl.ConnectionManagerImpl;
 
 
 

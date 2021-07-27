@@ -5,7 +5,6 @@ import java.io.RandomAccessFile;
 import java.util.concurrent.CyclicBarrier;
 
 import com.donaldy.download.api.Connection;
-import com.donaldy.download.api.ConnectionException;
 import com.donaldy.download.api.ConnectionManager;
 import com.donaldy.download.api.DownloadListener;
 
@@ -120,8 +119,6 @@ public class FileDownloader {
 	public void setListener(DownloadListener listener) {
 		this.listener = listener;
 	}
-
-	
 	
 	public void setConnectionManager(ConnectionManager ucm){
 		this.cm = ucm;
