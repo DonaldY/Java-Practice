@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class FileDownloaderTest {
-	boolean downloadFinished = false;
+	private boolean downloadFinished = false;
 	@Before
 	public void setUp() throws Exception {
 	}

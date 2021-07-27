@@ -14,9 +14,9 @@ public class FileDownloader {
 	private String url;
 	private String localFile;
 	
-	DownloadListener listener;
+	private DownloadListener listener;
 	
-	ConnectionManager cm;
+	private ConnectionManager cm;
 	
 
 	private static final int DOWNLOAD_TRHEAD_NUM = 3;
@@ -42,11 +42,8 @@ public class FileDownloader {
 		
 		// 下面的代码是示例代码， 也就是说只有一个线程， 你需要改造成多线程的。
 		
-		CyclicBarrier barrier = new CyclicBarrier(DOWNLOAD_TRHEAD_NUM , new Runnable(){
-			public void run(){
-				listener.notifyFinished();
-			}
-		}); 
+		CyclicBarrier barrier = new CyclicBarrier(DOWNLOAD_TRHEAD_NUM ,
+				() -> listener.notifyFinished());
 		
 		Connection conn  = null;
 		try {
